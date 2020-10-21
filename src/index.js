@@ -10,7 +10,7 @@ function Square(props) {
 
 class Board extends React.Component {
     renderSquare(i) {
-        return <Square value={i} onClick={() => this.props.onClick(i)}/>
+        return <Square value={this.props.squares[i]} onClick={() => this.props.onClick(i)}/>
     }
 
     render() {
@@ -47,7 +47,23 @@ class Game extends React.Component {
     }
 
     handleClick(i) {
+        const squares = this.state.squares;
+        const move = squares[i];
+
+        if (move) {
+            console.log('Square já utilizado');
+            return;
+        }
+
         console.log('handleClick - Game', i);
+
+        squares[i] = 'X';
+
+        this.setState(
+            {
+                squares: squares
+            }
+        )
 
         /*let move = "";
         let nextMove = "";
@@ -72,7 +88,7 @@ class Game extends React.Component {
         return (
             <div className="game">
                 <div className="game-board">
-                    <Board onClick={(i) => this.handleClick(i)}/>
+                    <Board squares ={this.state.squares} onClick={(i) => this.handleClick(i)}/>
                 </div>
 
                 <div className="game-info">
